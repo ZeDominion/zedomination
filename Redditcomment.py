@@ -11,24 +11,18 @@ def save_records(filename, records):
 def main():
     USER = "ZeDominion"  # Replace with the Reddit username
 
-    # Set up praw with your credentials
-    reddit = praw.Reddit(
-        client_id='6il3CGWBkKDyPNzIvn1Tlw',        # Replace with your client ID
-        client_secret='f7dJJOqY3N9fryAiEukqsoBknEq39w',# Replace with your client secret
-        user_agent='python:myredditapp:v1.0 (by /u/ZeDominion)',      # Replace with your user agent
-        username=USER,                   # Your Reddit username
-        password='Louati1404!'          # Your Reddit password
-    )
+    # Set up praw using the configuration from praw.ini
+    reddit = praw.Reddit("bot1", config_interpolation="basic")
 
     user = reddit.redditor(USER)
 
     # Getting the latest comments
-    comments = user.comments.new(limit=100)  # Retrieves the last 10 comments
+    comments = user.comments.new(limit=100)  # The comment limit
     comments_data = [serialize(comment) for comment in comments]
     save_records("comments.json", comments_data)
 
     # Getting the latest submissions
-    submissions = user.submissions.new(limit=10)  # Retrieves the last 10 submissions
+    submissions = user.submissions.new(limit=10)  # The submission limit
     submissions_data = [serialize(submission) for submission in submissions]
     save_records("submissions.json", submissions_data)
 
